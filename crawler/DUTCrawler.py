@@ -36,8 +36,13 @@ class DUTCrawler:
             return self.last_response
 
     def login(self):
-        self.sess.get(constants.URL_LOGIN_PAGE)
+        response = self.sess.get(constants.URL_LOGIN_PAGE)
         payload = constants.SAMPLE_LOGIN_PAYLOAD
+
+        soup = BeautifulSoup(response.text)
+        view_states = soup.find_all('input', {'type': 'hidden'})
+        for vs in view_states:
+            payload[vs.get('name')] = vs.get('value')
         payload[constants.PAYLOAD_USERNAME_FIELD] = self.username
         payload[constants.PAYLOAD_PASSWORD_FIELD] = self.password
 
@@ -179,6 +184,6 @@ class DUTCrawler:
 
 if __name__ == '__main__':
     bot = DUTCrawler('102170077', 'Mrwy0561999')
-    # print(bot.get_semester_list())
-    print(bot.get_tests('2010'))
+    print(bot.get_semester_list())
+    # print(bot.get_tests('2010'))
     # print(bot.get_moral_result())

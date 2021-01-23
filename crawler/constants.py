@@ -12,7 +12,7 @@ class DUTConstants:
     
     SAMPLE_LOGIN_PAYLOAD = {
         '__VIEWSTATE': '',
-        '__VIEWSTATEGENERATOR': '20CC0D2F',
+        '__VIEWSTATEGENERATOR': '',
         'ctl00$MainContent$DN_txtAcc': '',
         'ctl00$MainContent$DN_txtPass': '',
         'ctl00$MainContent$QLTH_btnLogin': 'Đăng nhập'
@@ -81,8 +81,3 @@ class DUTConstants:
         10: 'avg_saved_credit_b4',
         11: 'avg_moral'
     } 
-
-    def __init__(self):
-        with open('./view_state.txt', 'r') as view_state_file:
-            self.login_view_state = view_state_file.read()
-        self.SAMPLE_LOGIN_PAYLOAD['__VIEWSTATE'] = self.login_view_state
