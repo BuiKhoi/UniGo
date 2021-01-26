@@ -3,13 +3,22 @@ from flask_restful import Resource, Api, reqparse
 from DUTCrawler import DUTCrawler
 import time
 from threading import Thread
+import os
+import pickle
 
 app = Flask(__name__)
 api = Api(app)
 
-bots = {}
+if os.path.exists('./bots'):
+    with open('./bots', 'rb') as pickle_file:
+        bots = pickle.load(pickle_file)
+else:
+    bots = {}
 BOT_TIMEOUT = 120
 
+def save_bots(bots):
+    with open('./bots', 'wb') as pickle_file:
+        pickle.dump(bots, pickle_file)
 
 def millis():
     return int(time.time())
@@ -24,6 +33,7 @@ def auto_clean_thread():
             if mil - bots[bot_key]['last_access'] > BOT_TIMEOUT:
                 bots.pop(bot_key, None)
                 print('Autoclean removed bot with session id: ', bot_key)
+                save_bots(bots)
         time.sleep(BOT_TIMEOUT / 10)
 
 Thread(target=auto_clean_thread).start()
@@ -33,7 +43,11 @@ class CrawlerHandler(Resource):
 
 class DUTCrawlerHandler(CrawlerHandler):
     def post(self):
-        global bots
+        if os.path.exists('./bots'):
+            with open('./bots', 'rb') as pickle_file:
+                bots = pickle.load(pickle_file)
+        else:
+            bots = {}
         parser = reqparse.RequestParser()
         
         parser.add_argument('command', required=True)
@@ -52,6 +66,7 @@ class DUTCrawlerHandler(CrawlerHandler):
                     'handler': handler,
                     'last_access': millis()
                 }
+                save_bots(bots)
                 return {
                     'status': True,
                     'sess_id': sess_id
@@ -66,6 +81,7 @@ class DUTCrawlerHandler(CrawlerHandler):
             if args['session_id'] in bots.keys():
                 bots[args['session_id']]['last_access'] = millis()
                 handler = bots[args['session_id']]['handler']
+                save_bots(bots)
             else:
                 return {
                     'status': False,
