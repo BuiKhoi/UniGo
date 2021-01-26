@@ -1,1 +1,1 @@
-web: gunicorn api_controller:app
+python api_controller
