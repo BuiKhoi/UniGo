@@ -173,6 +173,22 @@ class DUTCrawler:
             })
         return notifications
 
+    def get_personal_information(self):
+        response = self.sess_get(constants.URL_MAIN_STUDENT_INFO)
+        soup = BeautifulSoup(response.text)
+        
+        return {
+            'student_name': soup.find('input', {'id': 'CN_txtHoTen'}).get('value'),
+            'sutdent_id': soup.find('span', {'id': 'Main_lblHoTen'}).text.split('(')[-1].split(')')[0],
+            'class_name': soup.find('input', {'id': 'CV_txtLop'}).get('value'),
+            'personal_email': soup.find('input', {'id': 'CN_txtMail2'}).get('value'),
+            'phone': soup.find('input', {'id': 'CN_txtPhone'}).get('value'),
+            'birthday': soup.find('input', {'id': 'CN_txtNgaySinh'}).get('value'),
+            'school_mail': soup.find('input', {'id': 'CN_txtMail1'}).get('value'),
+            'medical_id': soup.find('input', {'id': 'CN_txtSoBHYT'}).get('value'),
+            'medical_id_end': soup.find('input', {'id': 'CN_txtHanBHYT'}).get('value')
+        }
+
     def get_overall_notifications(self):
         response = self.sess_get(constants.URL_LANDING_PAGE)
         return self.get_notifications(response)
@@ -184,6 +200,7 @@ class DUTCrawler:
 
 if __name__ == '__main__':
     bot = DUTCrawler('102170077', 'Mrwy0561999')
-    print(bot.get_semester_list())
+    # print(bot.get_semester_list())
     # print(bot.get_tests('2010'))
     # print(bot.get_moral_result())
+    print(bot.get_personal_information())
