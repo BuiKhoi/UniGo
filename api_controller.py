@@ -9,7 +9,7 @@ api = Api(app)
 
 bots = {}
 
-BOT_TIMEOUT = 20
+BOT_TIMEOUT = 120
 
 def millis():
     return int(time.time())
