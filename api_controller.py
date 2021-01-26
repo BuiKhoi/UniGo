@@ -9,7 +9,7 @@ api = Api(app)
 
 bots = {}
 BOT_TIMEOUT = 120
-Thread(target=auto_clean_thread).start()
+
 
 def millis():
     return int(time.time())
@@ -25,6 +25,8 @@ def auto_clean_thread():
                 bots.pop(bot_key, None)
                 print('Autoclean removed bot with session id: ', bot_key)
         time.sleep(BOT_TIMEOUT / 10)
+
+Thread(target=auto_clean_thread).start()
 
 class CrawlerHandler(Resource):
     pass
