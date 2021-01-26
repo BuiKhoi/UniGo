@@ -8,8 +8,8 @@ app = Flask(__name__)
 api = Api(app)
 
 bots = {}
-
 BOT_TIMEOUT = 120
+Thread(target=auto_clean_thread).start()
 
 def millis():
     return int(time.time())
