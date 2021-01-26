@@ -92,6 +92,9 @@ class DUTCrawlerHandler(CrawlerHandler):
             elif command == 'get_moral_result':
                 return handler.get_moral_result()
 
+            elif command == 'get_personal_information':
+                return handler.get_personal_information()
+
             else:
                 return {
                     'status': False,
