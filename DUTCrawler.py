@@ -186,7 +186,8 @@ class DUTCrawler:
             'birthday': soup.find('input', {'id': 'CN_txtNgaySinh'}).get('value'),
             'school_mail': soup.find('input', {'id': 'CN_txtMail1'}).get('value'),
             'medical_id': soup.find('input', {'id': 'CN_txtSoBHYT'}).get('value'),
-            'medical_id_end': soup.find('input', {'id': 'CN_txtHanBHYT'}).get('value')
+            'medical_id_end': soup.find('input', {'id': 'CN_txtHanBHYT'}).get('value'),
+            'personal_image': soup.find('img', {'class': 'imgCB'}).get('src')
         }
 
     def get_overall_notifications(self):

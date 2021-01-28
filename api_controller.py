@@ -133,5 +133,5 @@ api.add_resource(DUTCrawlerHandler, '/dut/')
 
 if __name__ == '__main__':
     print('Starting server')
-    Thread(target=auto_clean_thread).start()
+    # Thread(target=auto_clean_thread).start()
     app.run(debug=False, use_reloader=False)
