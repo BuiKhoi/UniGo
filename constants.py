@@ -7,15 +7,15 @@ class DUTConstants:
     URL_STUDY_RESULT = 'http://sv.dut.udn.vn/PageKQRL.aspx'
     URL_NOTIFICATION_BY_CLASS = 'http://sv.dut.udn.vn/WebAjax/evLopHP_Load.aspx?E=CTRTBGV&PAGETB=1&COL=TieuDe&NAME=&TAB=1'
 
-    PAYLOAD_USERNAME_FIELD = 'ctl00$MainContent$DN_txtAcc'
-    PAYLOAD_PASSWORD_FIELD = 'ctl00$MainContent$DN_txtPass'
+    PAYLOAD_USERNAME_FIELD = '_ctl0:MainContent:DN_txtAcc'
+    PAYLOAD_PASSWORD_FIELD = '_ctl0:MainContent:DN_txtPass'
     
     SAMPLE_LOGIN_PAYLOAD = {
         '__VIEWSTATE': '',
         '__VIEWSTATEGENERATOR': '',
-        'ctl00$MainContent$DN_txtAcc': '',
-        'ctl00$MainContent$DN_txtPass': '',
-        'ctl00$MainContent$QLTH_btnLogin': 'Đăng nhập'
+        '_ctl0:MainContent:DN_txtAcc': '',
+        '_ctl0:MainContent:DN_txtPass': '',
+        '_ctl0:MainContent:QLTH_btnLogin': 'Đăng nhập'
     }
 
     KEY_BINDINGS_SCHEDULE = {
