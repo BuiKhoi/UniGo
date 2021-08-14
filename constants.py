@@ -3,9 +3,11 @@ class DUTConstants:
     URL_LOGIN_PAGE = 'http://sv.dut.udn.vn/PageDangNhap.aspx'
     URL_SCHEDULE_PAGE = 'http://sv.dut.udn.vn/PageLichTH.aspx'
     URL_SCHEDULE_PAGE_AJAX_SAMPLE = 'http://sv.dut.udn.vn/WebAjax/evLopHP_Load.aspx?E=TTKBLoad&Code={}'
+    URL_COLAB_PAGE_AJAX_SAMPLE = 'http://sv.dut.udn.vn/WebAjax/evLopHP_Load.aspx?E=TTKBView&MaLop={}'
     URL_MAIN_STUDENT_INFO = 'http://sv.dut.udn.vn/PageCaNhan.aspx'
     URL_STUDY_RESULT = 'http://sv.dut.udn.vn/PageKQRL.aspx'
     URL_NOTIFICATION_BY_CLASS = 'http://sv.dut.udn.vn/WebAjax/evLopHP_Load.aspx?E=CTRTBGV&PAGETB=1&COL=TieuDe&NAME=&TAB=1'
+    URL_CLASS_FRIEND_PAGE = 'http://sv.dut.udn.vn/PageLopSH.aspx'
 
     PAYLOAD_USERNAME_FIELD = '_ctl0:MainContent:DN_txtAcc'
     PAYLOAD_PASSWORD_FIELD = '_ctl0:MainContent:DN_txtPass'
@@ -25,7 +27,8 @@ class DUTConstants:
         3: 'credit',
         5: 'teacher',
         6: 'weekly_schedule',
-        7: 'study_weeks'
+        7: 'study_weeks',
+        10: 'class_code'
     }
 
     KEY_BINDINGS_TEST = {
@@ -80,4 +83,19 @@ class DUTConstants:
         9: 'saved_credits',
         10: 'avg_saved_credit_b4',
         11: 'avg_moral'
-    } 
+    }
+
+    KEY_BINDING_COLAB_INFO = {
+        1: 'sutdent_id',
+        2: 'student_name',
+        3: 'class_name',
+        4: 'phone'
+    }
+
+    KEY_BINDING_FRIEND_INFO = {
+        1: 'sutdent_id',
+        2: 'student_name',
+        4: 'phone',
+        5: 'mail',
+        6: 'parent_phone'
+    }

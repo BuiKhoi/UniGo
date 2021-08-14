@@ -1,5 +1,5 @@
 from bs4 import BeautifulSoup
-import json
+import re
 import requests
 import numpy as np
 
@@ -107,6 +107,9 @@ class DUTCrawler:
 
         def post_process_schedule(result, tds):
             result['weekly_schedule'] = self.refine_schedule(result['weekly_schedule'])
+            onclick_function = tds[10]['onclick']
+            class_id = re.findall(r"\('(.*)',", onclick_function)[0]
+            result["class_code"] = class_id
             return result
         
         return [self.parse_row_info(si, constants.KEY_BINDINGS_SCHEDULE, post_process_schedule) for si in schedule_items]
@@ -132,8 +135,8 @@ class DUTCrawler:
 
     def parse_semester_option(self, option):
         return {
-            'value': option.get('value'),
-            'name': option.text
+            'semester_id': option.get('value'),
+            'semester_name': option.text
         }
         
     def get_semester_list(self):
@@ -142,7 +145,9 @@ class DUTCrawler:
         options = soup.find('select', {
             'id': 'TTKB_cboHocKy'
         }).find_all('option')[1:]
-        return [self.parse_semester_option(o) for o in options]
+        return {
+            "semesters": [self.parse_semester_option(o) for o in options]
+        }
 
     def get_study_result(self):
         response = self.sess_get(constants.URL_STUDY_RESULT)
@@ -188,6 +193,26 @@ class DUTCrawler:
             'medical_id': soup.find('input', {'id': 'CN_txtSoBHYT'}).get('value'),
             'medical_id_end': soup.find('input', {'id': 'CN_txtHanBHYT'}).get('value'),
             'personal_image': soup.find('img', {'class': 'imgCB'}).get('src')
+        }
+
+    def get_colab_infos(self, class_id):
+        response = self.sess_get(constants.URL_COLAB_PAGE_AJAX_SAMPLE.format(class_id))
+        soup = BeautifulSoup(response.text)
+        
+        colabs = soup.find_all('tr', {'class': 'GridRow'})
+        colabs = [self.parse_row_info(res, constants.KEY_BINDING_COLAB_INFO) for res in colabs]
+        return {
+            "collaborators": colabs
+        }
+
+    def get_class_friends(self):
+        response = self.sess_get(constants.URL_CLASS_FRIEND_PAGE)
+        soup = BeautifulSoup(response.text)
+
+        friends = soup.find_all('tr', {'class': 'GridRow'})
+        friends = [self.parse_row_info(res, constants.KEY_BINDING_FRIEND_INFO) for res in friends]
+        return {
+            "friends": friends
         }
 
     def get_overall_notifications(self):

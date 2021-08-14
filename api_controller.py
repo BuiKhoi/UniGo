@@ -113,6 +113,17 @@ class DUTCrawlerHandler(CrawlerHandler):
             elif command == 'get_personal_information':
                 return handler.get_personal_information()
 
+            elif command == 'get_semester_list':
+                return handler.get_semester_list()
+
+            elif command == 'get_colab_info':
+                parser.add_argument('class_code')
+                args = parser.parse_args()
+                return handler.get_colab_infos(args['class_code'])
+
+            elif command == 'get_class_friends':
+                return handler.get_class_friends()
+
             else:
                 return {
                     'status': False,
