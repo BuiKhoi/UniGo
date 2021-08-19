@@ -145,9 +145,7 @@ class DUTCrawler:
         options = soup.find('select', {
             'id': 'TTKB_cboHocKy'
         }).find_all('option')[1:]
-        return {
-            "semesters": [self.parse_semester_option(o) for o in options]
-        }
+        return [self.parse_semester_option(o) for o in options]
 
     def get_study_result(self):
         response = self.sess_get(constants.URL_STUDY_RESULT)
@@ -201,9 +199,7 @@ class DUTCrawler:
         
         colabs = soup.find_all('tr', {'class': 'GridRow'})
         colabs = [self.parse_row_info(res, constants.KEY_BINDING_COLAB_INFO) for res in colabs]
-        return {
-            "collaborators": colabs
-        }
+        return colabs
 
     def get_class_friends(self):
         response = self.sess_get(constants.URL_CLASS_FRIEND_PAGE)
@@ -211,9 +207,7 @@ class DUTCrawler:
 
         friends = soup.find_all('tr', {'class': 'GridRow'})
         friends = [self.parse_row_info(res, constants.KEY_BINDING_FRIEND_INFO) for res in friends]
-        return {
-            "friends": friends
-        }
+        return friends
 
     def get_overall_notifications(self):
         response = self.sess_get(constants.URL_LANDING_PAGE)
